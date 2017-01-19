@@ -6,7 +6,7 @@ package project.peter.com.vuforiarajawali3d.Unit;
 public class VuforiaKeys {
 
     // License Key
-    public static final String LicenseKey = "AVHnCxH/////AAAAASpOGMlT1koQt7mV24xvKux1kQMmLbXADm8+pP5oKpws9PFu3yRE4FRJnGLeuEu4XVF1uNGvpHoY4rML2idj2HEsaS2uj31sUs5u7F1UyM9xfH5j9pnJhX+I39lZE7996ga8G+j9er7suI9VlIC3rbsDsYNUgF4Me5LED28+ua27yaMcdVl+x+SVek6reReWPI2KSVW7zt50EZtDf4VjCmw1waSri92pSCzQ+kp81D4j02ilm+c/UuekFzJQyMgnouXpuI2thsEph12bxBCljzVOmleUFnoIOMlnNAHHtnAyRpfWygDjzOFUnT9+O391KfPKsnpKI/Df1pvkaAZ0MuD1e7iCm7qTbBv6b/L6Q+mA";
+    public static final String LicenseKey = "AZz+4aj/////AAAAGYPgHHDJqk9ppLbHEurPz7hLA7uE0ILOKY0PoayaKbMDRgiIWVGc0v0/g+8pyz3BzWYJ0W3SEqHq9TNOTpJYQEbNtM3cGr8Tb2j56A6k9KMbRnc5T/nU527v/xILTU1jF91TCIX0ZSRl5F3SrwcUMOAf+FiGV72XpGvl1ezMjhpocjBoq/aWKkeczVuZiHss/NHkjQ66GgwbyoMLpaM8d60C4aENa0fo3cLYSEvgByu9nbh3HVG17DCSTgams9HPh/EByPb5BrxHWA1lgzPHQRBayRwuk5dne8q9fNetpuUj6if/p5MuAdHBmYpM2c12myWilLEo8FOBruh28rXbIERyc+SAW/pgWjBSqibKJr7T";
 
     // Cloud Target - Database Access Keys
     public static final String AccessKey = "77c344b90a5ef0de73abe9c5c314331537a67a76";
