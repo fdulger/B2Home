@@ -99,6 +99,7 @@ public class OnlineGalleryActivity extends AppCompatActivity {
                                             Log.e(TAG,"obj file already exist! ");
                                             Intent intent = new Intent(OnlineGalleryActivity.this, UserDefinedTargetActivity.class);
                                             intent.putExtra(UserDefinedTargetActivity.OBJ_FILE_PATH,item.getString("folder") + "/" + item.getString("file"));
+                                            intent.putExtra(UserDefinedTargetActivity.OBJ_SCALE_FACTOR,Float.parseFloat(item.getString("scale")));
                                             startActivity(intent);
                                         } else {
                                             new DownloadObjectTask(OnlineGalleryActivity.this,item.getString("folder"),item.getString("file")).execute(item.getString("url"));
