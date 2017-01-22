@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.opengl.GLES20;
+import android.util.Log;
 
 import org.rajawali3d.Camera;
 import org.rajawali3d.Object3D;
@@ -30,6 +31,8 @@ import java.util.ArrayList;
  */
 public class Model3D {
 
+    private final static String TAG = "Model3D";
+
     public final static int LOAD_MTL_OBJ = 0;
     public final static int LOAD_MD5_MASH = 1;
     public final static int LOAD_VIDEO_PLANE = 2;
@@ -46,6 +49,7 @@ public class Model3D {
     private int CollBoxColor = 0x00000000,
             AnimFPS = 24,
             resId_obj;
+    private String path = "";
     private Material material;
     private Matrix4 vpMatrix, projMatrix, vMatrix;
     private ArrayList<Integer>
@@ -79,6 +83,10 @@ public class Model3D {
         this.context = c;
         this.resId_obj = resId_obj;
     }
+    public Model3D(Context c, String path) {
+        this.context = c;
+        this.path = path;
+    }
 
     public void parse(RajawaliRenderer renderer){
 
@@ -87,7 +95,13 @@ public class Model3D {
             switch (MODE){
                 case Model3D.LOAD_MTL_OBJ:
                     // 讀入檔案
-                    LoaderOBJ parser = new LoaderOBJ(context.getResources(), renderer.getTextureManager(), resId_obj);
+                    LoaderOBJ parser;
+                    if(this.path.isEmpty()) {
+                        parser = new LoaderOBJ(context.getResources(), renderer.getTextureManager(), resId_obj);
+                    }
+                    else {
+                        parser = new LoaderOBJ(renderer, path);
+                    }
                     parser.parse();
 
                     mObject3D = parser.getParsedObject();
@@ -252,7 +266,7 @@ public class Model3D {
                 objectsCallback.visible(visiable);
 
         }catch (Exception e){
-            e.printStackTrace();
+            Log.e(TAG,"Error on setvisible");
         }
     }
     public int getMODE() {
