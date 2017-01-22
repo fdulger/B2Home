@@ -18,6 +18,7 @@ public class UserDefinedTargetActivity extends BaseVuforiaActivity {
     public static final String TAG = "UserDefinedTarget";
     public static final String OBJ_FILE_PATH = "OBJ_FILE_PATH";
     public static final String OBJ_SCALE_FACTOR = "OBJ_SCALE_FACTOR";
+    public static final String OBJ_ROTATION_FACTOR = "OBJ_ROTATION_FACTOR";
 
 
     @Override
@@ -27,8 +28,9 @@ public class UserDefinedTargetActivity extends BaseVuforiaActivity {
         RajLog.enableLogging(true);
         String path = getIntent().getExtras().getString(OBJ_FILE_PATH);
         Float scale = getIntent().getExtras().getFloat(OBJ_SCALE_FACTOR);
+        Float rotation = getIntent().getExtras().getFloat(OBJ_ROTATION_FACTOR);
         Log.e(TAG,"UserDefinedTargetActivity starting with path: "+path);
-        setShowModels(path,scale);
+        setShowModels(path,scale,rotation);
     }
 
     private void initAR(){
@@ -39,7 +41,7 @@ public class UserDefinedTargetActivity extends BaseVuforiaActivity {
         this.setMAX_TARGETS_COUNT(2);
     }
 
-    private void setShowModels(String path,Float scale){
+    private void setShowModels(String path, Float scale, Float rotation){
         // set show models
         ArrayList<Model3D> arrayList = new ArrayList<>();
 
@@ -48,7 +50,7 @@ public class UserDefinedTargetActivity extends BaseVuforiaActivity {
         tempM3D.setObj_scale(scale);
         tempM3D.setObj_translate_x(-20.0f);
         tempM3D.setObj_translate_y(-20.0f);
-        tempM3D.setObj_rotate_angle(90.0f);
+        tempM3D.setObj_rotate_angle(rotation);
         arrayList.add(tempM3D);
 
         this.setModel3DArrayList(arrayList);

@@ -100,9 +100,15 @@ public class OnlineGalleryActivity extends AppCompatActivity {
                                             Intent intent = new Intent(OnlineGalleryActivity.this, UserDefinedTargetActivity.class);
                                             intent.putExtra(UserDefinedTargetActivity.OBJ_FILE_PATH,item.getString("folder") + "/" + item.getString("file"));
                                             intent.putExtra(UserDefinedTargetActivity.OBJ_SCALE_FACTOR,Float.parseFloat(item.getString("scale")));
+                                            intent.putExtra(UserDefinedTargetActivity.OBJ_ROTATION_FACTOR,Float.parseFloat(item.getString("rotation")));
                                             startActivity(intent);
                                         } else {
-                                            new DownloadObjectTask(OnlineGalleryActivity.this,item.getString("folder"),item.getString("file")).execute(item.getString("url"));
+                                            new DownloadObjectTask(
+                                                    OnlineGalleryActivity.this,
+                                                    item.getString("folder"),
+                                                    item.getString("file"),
+                                                    Float.parseFloat(item.getString("scale")),
+                                                    Float.parseFloat(item.getString("rotation"))).execute(item.getString("url"));
                                         }
                                     } catch(JSONException e) {
                                         Log.e(TAG,"Unable to parse object url!",e);
@@ -162,11 +168,20 @@ public class OnlineGalleryActivity extends AppCompatActivity {
 
         private String obj_folder;
         private String obj_file;
+        private Float scale;
+        private Float rotation;
 
-        public DownloadObjectTask(OnlineGalleryActivity activity,String folder,String file) {
+        public DownloadObjectTask(
+                OnlineGalleryActivity activity,
+                String folder,
+                String file,
+                Float scale,
+                Float rotation) {
             this.activity = activity;
             this.obj_folder = folder;
             this.obj_file = file;
+            this.scale = scale;
+            this.rotation = rotation;
             downloadProgress = new ProgressDialog(this.activity);
             downloadProgress.setCancelable(true);
             downloadProgress.setIndeterminate(true);
@@ -291,6 +306,8 @@ public class OnlineGalleryActivity extends AppCompatActivity {
             }
             Intent intent = new Intent(OnlineGalleryActivity.this, UserDefinedTargetActivity.class);
             intent.putExtra(UserDefinedTargetActivity.OBJ_FILE_PATH,path);
+            intent.putExtra(UserDefinedTargetActivity.OBJ_SCALE_FACTOR,this.scale);
+            intent.putExtra(UserDefinedTargetActivity.OBJ_ROTATION_FACTOR,this.rotation);
             startActivity(intent);
         }
 
