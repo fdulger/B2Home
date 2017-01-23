@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">VuforiaRajawali3D</string>
+    <string name="app_name">Bring2Home</string>
 
     <string name="UPDATE_ERROR_AUTHORIZATION_FAILED_TITLE">Authorization Error</string>
     <string name="UPDATE_ERROR_PROJECT_SUSPENDED_TITLE">Authorization Error</string>
