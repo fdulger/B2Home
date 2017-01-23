@@ -9,11 +9,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.PowerManager;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -43,22 +45,18 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 //TODO:
-//change package name !!!
-//delete all redundant files !
-//server ip address setting !
-//gallery refresh button !!!
-//buy item !!!
+//handle error cases: !!! no connection, invalid object, ...
 //add more models !!!
+//gallery refresh button !
 //scale model dynamically !
 //load other formats !
-//handle error cases: !!! no connection, invalid object, ... 
 //final report !!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-public class OnlineGalleryActivity extends AppCompatActivity {
+    public class OnlineGalleryActivity extends AppCompatActivity {
 
-    private static final String TAG = "OnlineGalleryActivity";
+        private static final String TAG = "OnlineGalleryActivity";
 
-    @Override
+        @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_online_gallery);
@@ -69,14 +67,13 @@ public class OnlineGalleryActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivity(new Intent(OnlineGalleryActivity.this,PreferencesActivity.class));
             }
         });
 
-
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://192.168.1.27/b2home/index.json";
+        String server_ip = PreferenceManager.getDefaultSharedPreferences(OnlineGalleryActivity.this).getString("server_ip",getString(R.string.pref_default_server_ip));
+        String url ="http://"+server_ip+"/b2home/index.json";
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -99,7 +96,7 @@ public class OnlineGalleryActivity extends AppCompatActivity {
                                             .execute(thumbnails.getJSONObject(j).getString("url"));
                                     thumbnails_container.addView(thumbnail);
                                 }
-                                item_view.setOnClickListener(new View.OnClickListener() {
+                                thumbnails_container.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
                                     try {
@@ -135,7 +132,9 @@ public class OnlineGalleryActivity extends AppCompatActivity {
                         public void onErrorResponse(VolleyError error) {
                             LinearLayout gallery_items_container = (LinearLayout) findViewById(R.id.gallery_items_container);
                             TextView text = new TextView(OnlineGalleryActivity.this);
-                            text.setText(error.getMessage());
+                            text.setText(getString(R.string.error_cannot_connect_server));
+                            text.setTextSize(30);
+                            gallery_items_container.setVerticalGravity(Gravity.CENTER_VERTICAL);
                             gallery_items_container.addView(text);
                         }
                 });

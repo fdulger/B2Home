@@ -1,7 +1,10 @@
 package com.fdulger.b2home;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.fdulger.b2home.Unit.BaseVuforiaActivity;
 import com.fdulger.b2home.Unit.Model3D;
@@ -31,6 +34,18 @@ public class UserDefinedTargetActivity extends BaseVuforiaActivity {
         Float rotation = getIntent().getExtras().getFloat(OBJ_ROTATION_FACTOR);
         Log.e(TAG,"UserDefinedTargetActivity starting with path: "+path);
         setShowModels(path,scale,rotation);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_user_defined_target_activity, menu);
+        return true;
+    }
+
+    public void onBuyAction(MenuItem item) {
+        Snackbar.make(getWindow().getDecorView().getRootView(), getString(R.string.todo), Snackbar.LENGTH_LONG)
+        .show();
     }
 
     private void initAR(){
