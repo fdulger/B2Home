@@ -110,6 +110,28 @@ public class BaseRajawaliRender extends org.rajawali3d.renderer.RajawaliRenderer
         }
         return model3DArrayList.get(index).getObj_scale();
     }
+    public void scaleUp(int index) {
+        if (index>=model3DArrayList.size()){
+            if (model3DArrayList.size()==1){
+                index = 0;
+            } else {
+                index = model3DArrayList.size()-1;
+            }
+        }
+        model3DArrayList.get(index).setObj_scale(
+                model3DArrayList.get(index).getObj_scale() + 5.0f);
+    }
+    public void scaleDown(int index) {
+        if (index>=model3DArrayList.size()){
+            if (model3DArrayList.size()==1){
+                index = 0;
+            } else {
+                index = model3DArrayList.size()-1;
+            }
+        }
+        model3DArrayList.get(index).setObj_scale(
+                model3DArrayList.get(index).getObj_scale() - 5.0f);
+    }
     public float getObjTranslateX(int index){
         if (index>=model3DArrayList.size()){
             if (model3DArrayList.size()==1){
@@ -120,6 +142,17 @@ public class BaseRajawaliRender extends org.rajawali3d.renderer.RajawaliRenderer
         }
         return model3DArrayList.get(index).getObj_translate_x();
     }
+    public void translateX(int index,Float distance) {
+        if (index>=model3DArrayList.size()){
+            if (model3DArrayList.size()==1){
+                index = 0;
+            } else {
+                index = model3DArrayList.size()-1;
+            }
+        }
+        model3DArrayList.get(index).setObj_translate_x(
+                model3DArrayList.get(index).getObj_translate_x() + distance);
+    }
     public float getObjTranslateY(int index){
         if (index>=model3DArrayList.size()){
             if (model3DArrayList.size()==1){
@@ -129,6 +162,17 @@ public class BaseRajawaliRender extends org.rajawali3d.renderer.RajawaliRenderer
             }
         }
         return model3DArrayList.get(index).getObj_translate_y();
+    }
+    public void translateY(int index,Float distance) {
+        if (index>=model3DArrayList.size()){
+            if (model3DArrayList.size()==1){
+                index = 0;
+            } else {
+                index = model3DArrayList.size()-1;
+            }
+        }
+        model3DArrayList.get(index).setObj_translate_y(
+                model3DArrayList.get(index).getObj_translate_y() + distance);
     }
     public float getObjRotateAngle(int index){
         if (index>=model3DArrayList.size()){
@@ -169,6 +213,17 @@ public class BaseRajawaliRender extends org.rajawali3d.renderer.RajawaliRenderer
             }
         }
         return model3DArrayList.get(index).getObj_rotate_z();
+    }
+    public void rotateZ(int index,Float angle) {
+        if (index>=model3DArrayList.size()){
+            if (model3DArrayList.size()==1){
+                index = 0;
+            } else {
+                index = model3DArrayList.size()-1;
+            }
+        }
+        model3DArrayList.get(index).setObj_rotate_z(
+                model3DArrayList.get(index).getObj_rotate_z() + angle);
     }
 
     /**

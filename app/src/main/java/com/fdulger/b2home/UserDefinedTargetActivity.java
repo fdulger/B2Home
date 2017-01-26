@@ -26,6 +26,14 @@ public class UserDefinedTargetActivity extends BaseVuforiaActivity {
     public static final String OBJ_TRANSLATE_X_FACTOR = "OBJ_TRANSLATE_X_FACTOR";
     public static final String OBJ_TRANSLATE_Y_FACTOR = "OBJ_TRANSLATE_Y_FACTOR";
 
+    private static final int CONTROL_COMMAND_SCALE_UP = 0;
+    private static final int CONTROL_COMMAND_SCALE_DOWN = 1;
+    private static final int CONTROL_COMMAND_TRANSLATE_X_1 = 2;
+    private static final int CONTROL_COMMAND_TRANSLATE_X_2 = 3;
+    private static final int CONTROL_COMMAND_TRANSLATE_Y_1 = 4;
+    private static final int CONTROL_COMMAND_TRANSLATE_Y_2 = 5;
+    private static final int CONTROL_COMMAND_ROTATE = 6;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +84,34 @@ public class UserDefinedTargetActivity extends BaseVuforiaActivity {
         arrayList.add(tempM3D);
 
         this.setModel3DArrayList(arrayList);
+    }
+
+    private void move(int command){
+        switch (command) {
+            case CONTROL_COMMAND_SCALE_UP:
+                BaseRajawaliRender.scaleUp(0);
+                break;
+            case CONTROL_COMMAND_SCALE_DOWN:
+                BaseRajawaliRender.scaleDown(0);
+                break;
+            case CONTROL_COMMAND_TRANSLATE_X_1:
+                BaseRajawaliRender.translateX(0,5.0f);
+                break;
+            case CONTROL_COMMAND_TRANSLATE_X_2:
+                BaseRajawaliRender.translateX(0,-5.0f);
+                break;
+            case CONTROL_COMMAND_TRANSLATE_Y_1:
+                BaseRajawaliRender.translateY(0,5.0f);
+                break;
+            case CONTROL_COMMAND_TRANSLATE_Y_2:
+                BaseRajawaliRender.translateY(0,-5.0f);
+                break;
+            case CONTROL_COMMAND_ROTATE:
+                BaseRajawaliRender.rotateZ(0,90.0f);
+                break;
+            default:
+                break;
+        }
     }
 
 }
