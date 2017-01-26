@@ -107,6 +107,11 @@ import java.util.zip.ZipInputStream;
                                             intent.putExtra(UserDefinedTargetActivity.OBJ_FILE_PATH,item.getString("folder") + "/" + item.getString("file"));
                                             intent.putExtra(UserDefinedTargetActivity.OBJ_SCALE_FACTOR,Float.parseFloat(item.getString("scale")));
                                             intent.putExtra(UserDefinedTargetActivity.OBJ_ROTATION_FACTOR,Float.parseFloat(item.getString("rotation")));
+                                            if(item.has(UserDefinedTargetActivity.OBJ_TRANSLATE_X_FACTOR))
+                                                intent.putExtra(UserDefinedTargetActivity.OBJ_TRANSLATE_X_FACTOR,Float.parseFloat(item.getString("translatex")));
+                                            if(item.has(UserDefinedTargetActivity.OBJ_TRANSLATE_Y_FACTOR))
+                                                intent.putExtra(UserDefinedTargetActivity.OBJ_TRANSLATE_Y_FACTOR,Float.parseFloat(item.getString("translatey")));
+
                                             startActivity(intent);
                                         } else {
                                             new DownloadObjectTask(

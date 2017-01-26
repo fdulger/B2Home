@@ -1,5 +1,6 @@
 package com.fdulger.b2home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
@@ -22,6 +23,8 @@ public class UserDefinedTargetActivity extends BaseVuforiaActivity {
     public static final String OBJ_FILE_PATH = "OBJ_FILE_PATH";
     public static final String OBJ_SCALE_FACTOR = "OBJ_SCALE_FACTOR";
     public static final String OBJ_ROTATION_FACTOR = "OBJ_ROTATION_FACTOR";
+    public static final String OBJ_TRANSLATE_X_FACTOR = "OBJ_TRANSLATE_X_FACTOR";
+    public static final String OBJ_TRANSLATE_Y_FACTOR = "OBJ_TRANSLATE_Y_FACTOR";
 
 
     @Override
@@ -29,11 +32,14 @@ public class UserDefinedTargetActivity extends BaseVuforiaActivity {
         initAR();
         super.onCreate(savedInstanceState);
         RajLog.enableLogging(true);
-        String path = getIntent().getExtras().getString(OBJ_FILE_PATH);
-        Float scale = getIntent().getExtras().getFloat(OBJ_SCALE_FACTOR);
-        Float rotation = getIntent().getExtras().getFloat(OBJ_ROTATION_FACTOR);
+        Bundle extras = getIntent().getExtras();
+        String path = extras.getString(OBJ_FILE_PATH);
+        Float scale = extras.getFloat(OBJ_SCALE_FACTOR);
+        Float rotation = extras.getFloat(OBJ_ROTATION_FACTOR);
+        Float translatex = extras.getFloat(OBJ_TRANSLATE_X_FACTOR,0);
+        Float translatey = extras.getFloat(OBJ_TRANSLATE_Y_FACTOR,0);
         Log.e(TAG,"UserDefinedTargetActivity starting with path: "+path);
-        setShowModels(path,scale,rotation);
+        setShowModels(path,scale,rotation,translatex,translatey);
     }
 
     @Override
@@ -56,15 +62,16 @@ public class UserDefinedTargetActivity extends BaseVuforiaActivity {
         this.setMAX_TARGETS_COUNT(2);
     }
 
-    private void setShowModels(String path, Float scale, Float rotation){
+    private void setShowModels(String path, Float scale, Float rotation, Float translatex, Float translatey){
         // set show models
         ArrayList<Model3D> arrayList = new ArrayList<>();
 
         Model3D tempM3D;
         tempM3D = new Model3D(this, path);
         tempM3D.setObj_scale(scale);
-        tempM3D.setObj_translate_x(-20.0f);
-        tempM3D.setObj_translate_y(-20.0f);
+        tempM3D.setObj_translate_x(translatex);
+        tempM3D.setObj_translate_y(translatey);
+        tempM3D.setObj_translate_y(translatey);
         tempM3D.setObj_rotate_angle(rotation);
         arrayList.add(tempM3D);
 
