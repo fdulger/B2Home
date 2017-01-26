@@ -103,23 +103,22 @@ import java.util.zip.ZipInputStream;
                                         File obj = new File(Environment.getExternalStorageDirectory().getPath() + "/" + item.getString("folder") + "/" + item.getString("file"));
                                         if(obj.exists()) {
                                             Log.e(TAG,"obj file already exist! ");
-                                            Intent intent = new Intent(OnlineGalleryActivity.this, UserDefinedTargetActivity.class);
-                                            intent.putExtra(UserDefinedTargetActivity.OBJ_FILE_PATH,item.getString("folder") + "/" + item.getString("file"));
-                                            intent.putExtra(UserDefinedTargetActivity.OBJ_SCALE_FACTOR,Float.parseFloat(item.getString("scale")));
-                                            intent.putExtra(UserDefinedTargetActivity.OBJ_ROTATION_FACTOR,Float.parseFloat(item.getString("rotation")));
-                                            if(item.has(UserDefinedTargetActivity.OBJ_TRANSLATE_X_FACTOR))
-                                                intent.putExtra(UserDefinedTargetActivity.OBJ_TRANSLATE_X_FACTOR,Float.parseFloat(item.getString("translatex")));
-                                            if(item.has(UserDefinedTargetActivity.OBJ_TRANSLATE_Y_FACTOR))
-                                                intent.putExtra(UserDefinedTargetActivity.OBJ_TRANSLATE_Y_FACTOR,Float.parseFloat(item.getString("translatey")));
-
-                                            startActivity(intent);
+                                            startShow(
+                                                item.getString("folder") + "/" + item.getString("file"),
+                                                Float.parseFloat(item.getString("scale")),
+                                                Float.parseFloat(item.getString("rotation")),
+                                                item.has("translatex") ? Float.parseFloat(item.getString("translatex")) : 0.0f,
+                                                item.has("translatey") ? Float.parseFloat(item.getString("translatey")) : 0.0f
+                                            );
                                         } else {
                                             new DownloadObjectTask(
                                                     OnlineGalleryActivity.this,
                                                     item.getString("folder"),
                                                     item.getString("file"),
                                                     Float.parseFloat(item.getString("scale")),
-                                                    Float.parseFloat(item.getString("rotation"))).execute(item.getString("url"));
+                                                    Float.parseFloat(item.getString("rotation")),
+                                                    Float.parseFloat(item.getString("translatex")),
+                                                    Float.parseFloat(item.getString("translatey"))).execute(item.getString("url"));
                                         }
                                     } catch(JSONException e) {
                                         Log.e(TAG,"Unable to parse object url!",e);
@@ -146,6 +145,16 @@ import java.util.zip.ZipInputStream;
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
 
+    }
+
+    private void startShow(String file,Float scale,Float rotation,Float translatex,Float translatey) {
+        Intent intent = new Intent(OnlineGalleryActivity.this, UserDefinedTargetActivity.class);
+        intent.putExtra(UserDefinedTargetActivity.OBJ_FILE_PATH,file);
+        intent.putExtra(UserDefinedTargetActivity.OBJ_SCALE_FACTOR,scale);
+        intent.putExtra(UserDefinedTargetActivity.OBJ_ROTATION_FACTOR,rotation);
+        intent.putExtra(UserDefinedTargetActivity.OBJ_TRANSLATE_X_FACTOR,translatex);
+        intent.putExtra(UserDefinedTargetActivity.OBJ_TRANSLATE_Y_FACTOR,translatey);
+        startActivity(intent);
     }
 
     private class DownloadThumbnailTask extends AsyncTask<String, Void, Bitmap> {
@@ -183,18 +192,24 @@ import java.util.zip.ZipInputStream;
         private String obj_file;
         private Float scale;
         private Float rotation;
+        private Float translatex;
+        private Float translatey;
 
         public DownloadObjectTask(
                 OnlineGalleryActivity activity,
                 String folder,
                 String file,
                 Float scale,
-                Float rotation) {
+                Float rotation,
+                Float translatex,
+                Float translatey) {
             this.activity = activity;
             this.obj_folder = folder;
             this.obj_file = file;
             this.scale = scale;
             this.rotation = rotation;
+            this.translatex = translatex;
+            this.translatey = translatey;
             downloadProgress = new ProgressDialog(this.activity);
             downloadProgress.setCancelable(true);
             downloadProgress.setIndeterminate(true);
@@ -317,11 +332,7 @@ import java.util.zip.ZipInputStream;
             else {
                 Log.e(TAG,"Object read: " + path);
             }
-            Intent intent = new Intent(OnlineGalleryActivity.this, UserDefinedTargetActivity.class);
-            intent.putExtra(UserDefinedTargetActivity.OBJ_FILE_PATH,path);
-            intent.putExtra(UserDefinedTargetActivity.OBJ_SCALE_FACTOR,this.scale);
-            intent.putExtra(UserDefinedTargetActivity.OBJ_ROTATION_FACTOR,this.rotation);
-            startActivity(intent);
+            startShow(path,scale,rotation,translatex,translatey);
         }
 
         private boolean unpackZip(String path, String zipname)
@@ -372,33 +383,5 @@ import java.util.zip.ZipInputStream;
 
             return true;
         }
-
-        /*public void unzip(File zipFile, File targetDirectory) throws IOException {
-            ZipInputStream zis = new ZipInputStream(
-                    new BufferedInputStream(new FileInputStream(zipFile)));
-            try {
-                ZipEntry ze;
-                int count;
-                byte[] buffer = new byte[8192];
-                while ((ze = zis.getNextEntry()) != null) {
-                    File file = new File(targetDirectory, ze.getName());
-                    File dir = ze.isDirectory() ? file : file.getParentFile();
-                    if (!dir.isDirectory() && !dir.mkdirs())
-                        throw new FileNotFoundException("Failed to ensure directory: " +
-                                dir.getAbsolutePath());
-                    if (ze.isDirectory())
-                        continue;
-                    FileOutputStream fout = new FileOutputStream(file);
-                    try {
-                        while ((count = zis.read(buffer)) != -1)
-                            fout.write(buffer, 0, count);
-                    } finally {
-                        fout.close();
-                    }
-                }
-            } finally {
-                zis.close();
-            }
-        }*/
     }
 }
