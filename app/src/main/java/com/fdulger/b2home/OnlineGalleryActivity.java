@@ -72,7 +72,7 @@ import java.util.zip.ZipInputStream;
         });
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String server_ip = PreferenceManager.getDefaultSharedPreferences(OnlineGalleryActivity.this).getString("server_ip",getString(R.string.pref_default_server_ip));
+        final String server_ip = PreferenceManager.getDefaultSharedPreferences(OnlineGalleryActivity.this).getString("server_ip",getString(R.string.pref_default_server_ip));
         String url ="http://"+server_ip+"/b2home/index.json";
 
         // Request a string response from the provided URL.
@@ -93,7 +93,7 @@ import java.util.zip.ZipInputStream;
                                 for(int j=0;j< thumbnails.length();j++) {
                                     ImageView thumbnail = new ImageView(OnlineGalleryActivity.this);
                                     new DownloadThumbnailTask(thumbnail)
-                                            .execute(thumbnails.getJSONObject(j).getString("url"));
+                                            .execute("http://"+server_ip+"/b2home/thumbs/"+thumbnails.getJSONObject(j).getString("url"));
                                     thumbnails_container.addView(thumbnail);
                                 }
                                 thumbnails_container.setOnClickListener(new View.OnClickListener() {
