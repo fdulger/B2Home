@@ -25,25 +25,133 @@
         android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:background="#00000000"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:visibility="visible"
-        android:weightSum="1" >
+        android:weightSum="1"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/loading_layout">
+
+            <TableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4">
+
+                <TableRow
+                    android:weightSum="3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal" >
+
+                    <ImageButton
+                        android:id="@+id/move_up_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/move_button_background"
+                        android:rotation="270"
+                        android:background="@android:color/transparent"
+                        android:onClick="onMoveUp" />
+                </TableRow>
+
+                <TableRow
+                    android:weightSum="3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal" >
+
+                    <ImageButton
+                        android:id="@+id/move_left_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/move_button_background"
+                        android:rotation="180"
+                        android:onClick="onMoveLeft" />
+                    <ImageButton
+                        android:id="@+id/rotate_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/rotate_button_background"
+                        android:rotation="0"
+                        android:onClick="onRotate" />
+                    <ImageButton
+                        android:id="@+id/move_right_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/move_button_background"
+                        android:rotation="0"
+                        android:background="@android:color/transparent"
+                        android:onClick="onMoveRight" />
+            </TableRow>
+
+                <TableRow
+                    android:weightSum="3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal">
+
+                    <ImageButton
+                        android:id="@+id/move_down_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/move_button_background"
+
+                        android:rotation="90"
+                        android:onClick="onMoveDown" />
+                </TableRow>
+
+            </TableLayout>
+
 
         <ImageButton
             android:id="@+id/camera_button"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-        	android:layout_centerHorizontal="true"
-            android:background="#00000000"
-            android:contentDescription="Camera Button"
-            android:onClick="onCameraClick"
-            android:padding="10dp"
-            android:src="@drawable/camera_button_background" />
+        android:background="#00000000"
+        android:contentDescription="Camera Button"
+        android:onClick="onCameraClick"
+        android:padding="10dp"
+        android:src="@drawable/camera_button_background"
+        android:layout_weight="0.2" />
+
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal" >
+
+                <ImageButton
+                    android:id="@+id/zoom_in_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/zoom_in_button_background"
+                    android:onClick="onZoomIn" />
+            </TableRow>
+
+            <TableRow
+                android:weightSum="3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal">
+
+                <ImageButton
+                    android:id="@+id/zoom_out_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/zoom_out_button_background"
+                    android:onClick="onZoomOut" />
+            </TableRow>
+
+        </TableLayout>
 
     </LinearLayout>
 

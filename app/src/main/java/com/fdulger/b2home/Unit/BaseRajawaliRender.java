@@ -119,7 +119,7 @@ public class BaseRajawaliRender extends org.rajawali3d.renderer.RajawaliRenderer
             }
         }
         model3DArrayList.get(index).setObj_scale(
-                model3DArrayList.get(index).getObj_scale() + 5.0f);
+                model3DArrayList.get(index).getObj_scale() + 1.0f);
     }
     public void scaleDown(int index) {
         if (index>=model3DArrayList.size()){
@@ -130,7 +130,7 @@ public class BaseRajawaliRender extends org.rajawali3d.renderer.RajawaliRenderer
             }
         }
         model3DArrayList.get(index).setObj_scale(
-                model3DArrayList.get(index).getObj_scale() - 5.0f);
+                model3DArrayList.get(index).getObj_scale() - 1.0f);
     }
     public float getObjTranslateX(int index){
         if (index>=model3DArrayList.size()){
@@ -184,6 +184,17 @@ public class BaseRajawaliRender extends org.rajawali3d.renderer.RajawaliRenderer
         }
         return model3DArrayList.get(index).getObj_rotate_angle();
     }
+    public void rotate(int index){
+        if (index>=model3DArrayList.size()){
+            if (model3DArrayList.size()==1){
+                index = 0;
+            } else {
+                index = model3DArrayList.size()-1;
+            }
+        }
+        model3DArrayList.get(index).setObj_rotate_angle(
+                model3DArrayList.get(index).getObj_rotate_angle() + 90.0f);
+    }
     public float getObjRotateX(int index){
         if (index>=model3DArrayList.size()){
             if (model3DArrayList.size()==1){
@@ -213,17 +224,6 @@ public class BaseRajawaliRender extends org.rajawali3d.renderer.RajawaliRenderer
             }
         }
         return model3DArrayList.get(index).getObj_rotate_z();
-    }
-    public void rotateZ(int index,Float angle) {
-        if (index>=model3DArrayList.size()){
-            if (model3DArrayList.size()==1){
-                index = 0;
-            } else {
-                index = model3DArrayList.size()-1;
-            }
-        }
-        model3DArrayList.get(index).setObj_rotate_z(
-                model3DArrayList.get(index).getObj_rotate_z() + angle);
     }
 
     /**

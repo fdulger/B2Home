@@ -62,7 +62,6 @@ import java.util.zip.ZipInputStream;
         setContentView(R.layout.activity_online_gallery);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,8 +104,8 @@ import java.util.zip.ZipInputStream;
                                             Log.e(TAG,"obj file already exist! ");
                                             startShow(
                                                 item.getString("folder") + "/" + item.getString("file"),
-                                                Float.parseFloat(item.getString("scale")),
-                                                Float.parseFloat(item.getString("rotation")),
+                                                item.has("scale") ? Float.parseFloat(item.getString("scale")) : 0.0f,
+                                                item.has("rotation") ? Float.parseFloat(item.getString("rotation")) : 0.0f,
                                                 item.has("translatex") ? Float.parseFloat(item.getString("translatex")) : 0.0f,
                                                 item.has("translatey") ? Float.parseFloat(item.getString("translatey")) : 0.0f
                                             );
@@ -115,10 +114,11 @@ import java.util.zip.ZipInputStream;
                                                     OnlineGalleryActivity.this,
                                                     item.getString("folder"),
                                                     item.getString("file"),
-                                                    Float.parseFloat(item.getString("scale")),
-                                                    Float.parseFloat(item.getString("rotation")),
-                                                    Float.parseFloat(item.getString("translatex")),
-                                                    Float.parseFloat(item.getString("translatey"))).execute(item.getString("url"));
+                                                    item.has("scale") ? Float.parseFloat(item.getString("scale")) : 0.0f,
+                                                    item.has("rotation") ? Float.parseFloat(item.getString("rotation")) : 0.0f,
+                                                    item.has("translatex") ? Float.parseFloat(item.getString("translatex")) : 0.0f,
+                                                    item.has("translatey") ? Float.parseFloat(item.getString("translatey")) : 0.0f)
+                                                    .execute(item.getString("url"));
                                         }
                                     } catch(JSONException e) {
                                         Log.e(TAG,"Unable to parse object url!",e);

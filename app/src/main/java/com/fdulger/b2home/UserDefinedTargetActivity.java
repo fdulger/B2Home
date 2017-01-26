@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.fdulger.b2home.Unit.BaseVuforiaActivity;
 import com.fdulger.b2home.Unit.Model3D;
@@ -57,15 +58,9 @@ public class UserDefinedTargetActivity extends BaseVuforiaActivity {
         return true;
     }
 
-    public void onBuyAction(MenuItem item) {
-        Snackbar.make(getWindow().getDecorView().getRootView(), getString(R.string.todo), Snackbar.LENGTH_LONG)
-        .show();
-    }
-
     private void initAR(){
         // set mode
         this.setARMode(BaseVuforiaActivity.MODE_UserDefinedTarget);
-
         // set max targets will show in same time
         this.setMAX_TARGETS_COUNT(2);
     }
@@ -95,23 +90,56 @@ public class UserDefinedTargetActivity extends BaseVuforiaActivity {
                 BaseRajawaliRender.scaleDown(0);
                 break;
             case CONTROL_COMMAND_TRANSLATE_X_1:
-                BaseRajawaliRender.translateX(0,5.0f);
+                BaseRajawaliRender.translateX(0,20.0f);
                 break;
             case CONTROL_COMMAND_TRANSLATE_X_2:
-                BaseRajawaliRender.translateX(0,-5.0f);
+                BaseRajawaliRender.translateX(0,-20.0f);
                 break;
             case CONTROL_COMMAND_TRANSLATE_Y_1:
-                BaseRajawaliRender.translateY(0,5.0f);
+                BaseRajawaliRender.translateY(0,20.0f);
                 break;
             case CONTROL_COMMAND_TRANSLATE_Y_2:
-                BaseRajawaliRender.translateY(0,-5.0f);
+                BaseRajawaliRender.translateY(0,-20.0f);
                 break;
             case CONTROL_COMMAND_ROTATE:
-                BaseRajawaliRender.rotateZ(0,90.0f);
+                BaseRajawaliRender.rotate(0);
                 break;
             default:
                 break;
         }
+    }
+
+    public void onBuyAction(MenuItem item) {
+        Snackbar.make(getWindow().getDecorView().getRootView(), getString(R.string.todo), Snackbar.LENGTH_LONG)
+                .show();
+    }
+
+    public void onZoomIn(View view) {
+        move(CONTROL_COMMAND_SCALE_UP);
+    }
+
+    public void onZoomOut(View view) {
+        move(CONTROL_COMMAND_SCALE_DOWN);
+    }
+
+    public void onMoveUp(View view) {
+        move(CONTROL_COMMAND_TRANSLATE_X_2);
+    }
+
+    public void onMoveDown(View view) {
+        move(CONTROL_COMMAND_TRANSLATE_X_1);
+    }
+
+    public void onMoveLeft(View view) {
+        move(CONTROL_COMMAND_TRANSLATE_Y_2);
+    }
+
+    public void onMoveRight(View view) {
+        move(CONTROL_COMMAND_TRANSLATE_Y_1);
+    }
+
+    public void onRotate(View view) {
+        move(CONTROL_COMMAND_ROTATE);
     }
 
 }
