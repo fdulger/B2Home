@@ -118,7 +118,7 @@ import java.util.zip.ZipInputStream;
                                                     item.has("rotation") ? Float.parseFloat(item.getString("rotation")) : 0.0f,
                                                     item.has("translatex") ? Float.parseFloat(item.getString("translatex")) : 0.0f,
                                                     item.has("translatey") ? Float.parseFloat(item.getString("translatey")) : 0.0f)
-                                                    .execute(item.getString("url"));
+                                                    .execute("http://"+server_ip+"/b2home/files/"+item.getString("url"));
                                         }
                                     } catch(JSONException e) {
                                         Log.e(TAG,"Unable to parse object url!",e);
@@ -230,8 +230,8 @@ import java.util.zip.ZipInputStream;
                 // expect HTTP 200 OK, so we don't mistakenly save error report
                 // instead of the file
                 if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                    return "Server returned HTTP " + connection.getResponseCode()
-                            + " " + connection.getResponseMessage();
+                    Log.i(TAG,"download failed: " + connection.getResponseMessage());
+                    return null;
                 }
 
                 // this will be useful to display download percentage
@@ -248,6 +248,7 @@ import java.util.zip.ZipInputStream;
                 while ((count = input.read(data)) != -1) {
                     // allow canceling with back button
                     if (isCancelled()) {
+                        Log.i(TAG,"download cancelled.");
                         input.close();
                         return null;
                     }
